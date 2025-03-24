@@ -1,9 +1,9 @@
-import { UrlForm } from "@/features/url/url-form";
+import { UploadCard } from "@/features/upload/upload-card";
 
 export default function Home() {
   return (
     <section>
-      <UrlForm />
+      <UploadCard />
     </section>
   );
 }
