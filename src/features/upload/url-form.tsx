@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useQueryClient } from "@tanstack/react-query";
+import { useCreateUrl } from "@/features/upload/useCreateUrl";
 
 type FormData = {
   url: string;
@@ -20,21 +21,11 @@ export const UrlForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
-  const queryClient = useQueryClient();
+  const { mutateAsync, error: APIError } = useCreateUrl();
 
   const onSubmit = async (data: FormData) => {
-    const response = await fetch("/api/urls", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-
-    const result = await response.json();
+    const result = await mutateAsync(data);
     console.log(result);
-
-    await queryClient.invalidateQueries();
   };
 
   return (
@@ -52,6 +43,7 @@ export const UrlForm = () => {
         {errors.url && (
           <p className="text-sm text-red-500">{errors.url.message}</p>
         )}
+        {APIError && <p className="text-sm text-red-500">{APIError.message}</p>}
       </div>
       <Button type="submit" className="w-full">
         Submit
