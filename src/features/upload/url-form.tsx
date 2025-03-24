@@ -20,8 +20,17 @@ export const UrlForm = () => {
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
-  const onSubmit = (data: FormData) => {
-    console.log("Submitted URL:", data.url);
+  const onSubmit = async (data: FormData) => {
+    const response = await fetch("/api/urls", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    const result = await response.json();
+    console.log("Submitted URL:", result);
   };
 
   return (
