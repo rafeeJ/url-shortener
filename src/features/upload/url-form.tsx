@@ -25,10 +25,24 @@ export const UrlForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Input type="text" placeholder="Enter URL" {...register("url")} />
-      {errors.url && <p style={{ color: "red" }}>{errors.url.message}</p>}
-      <Button type="submit">Submit</Button>
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <div className="flex flex-col space-y-2">
+        <label htmlFor="url" className="text-sm font-medium text-gray-700">
+          Enter URL
+        </label>
+        <Input
+          type="text"
+          id="url"
+          placeholder="Enter URL"
+          {...register("url")}
+        />
+        {errors.url && (
+          <p className="text-sm text-red-500">{errors.url.message}</p>
+        )}
+      </div>
+      <Button type="submit" className="w-full">
+        Submit
+      </Button>
     </form>
   );
 };

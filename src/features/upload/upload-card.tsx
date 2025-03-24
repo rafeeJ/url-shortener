@@ -14,14 +14,13 @@ export const UploadCard = () => {
     <Card className="w-full max-w-md mx-auto mt-10">
       <CardHeader>
         <CardTitle>Upload Content</CardTitle>
-        <CardDescription>
-          Enter a URL or upload a file. Once you start with one, the other will
-          be hidden.
-        </CardDescription>
+        <CardDescription>Enter a URL or upload a file!</CardDescription>
       </CardHeader>
       <CardContent>
-        <UrlForm />
-        <FileForm />
+        <div className="flex flex-col gap-2">
+          <UrlForm />
+          <FileForm />
+        </div>
       </CardContent>
     </Card>
   );

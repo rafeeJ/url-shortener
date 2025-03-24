@@ -25,15 +25,19 @@ export const FileForm = () => {
   };
 
   return (
-    <form
-      onSubmit={handleFileSubmit(onFileSubmit)}
-      style={{ marginTop: "2rem" }}
-    >
-      <Input type="file" {...registerFile("file")} />
-      {fileErrors.file && (
-        <p style={{ color: "red" }}>{fileErrors.file.message}</p>
-      )}
-      <Button type="submit">Upload</Button>
+    <form onSubmit={handleFileSubmit(onFileSubmit)} className="space-y-4">
+      <div className="flex flex-col space-y-2">
+        <label htmlFor="file" className="text-sm font-medium text-gray-700">
+          Upload File
+        </label>
+        <Input type="file" id="file" {...registerFile("file")} />
+        {fileErrors.file && (
+          <p className="text-sm text-red-500">{fileErrors.file.message}</p>
+        )}
+      </div>
+      <Button type="submit" className="w-full">
+        Upload
+      </Button>
     </form>
   );
 };
