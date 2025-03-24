@@ -1,5 +1,13 @@
 "use client";
 import { useGetUrls } from "@/features/history/useGetUrls";
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableHead,
+  TableRow,
+  TableCell,
+} from "@/components/ui/table";
 
 export default function HistoryTable() {
   const { data, isLoading, error } = useGetUrls();
@@ -8,27 +16,41 @@ export default function HistoryTable() {
   if (error) return <p>Failed to load URLs</p>;
 
   return (
-    <ul className="space-y-2">
-      {data?.urls.map((url) => (
-        <li key={url.id} className="border p-3 rounded">
-          <div>
-            <strong>Original:</strong>{" "}
-            <a href={url.originalUrl} target="_blank" rel="noopener noreferrer">
-              {url.originalUrl}
-            </a>
-          </div>
-          <div>
-            <strong>Short:</strong>{" "}
-            <a
-              href={`/${url.shortCode}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {window.location.origin}/{url.shortCode}
-            </a>
-          </div>
-        </li>
-      ))}
-    </ul>
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead>Original URL</TableHead>
+          <TableHead>Short URL</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {data?.urls.map((url) => (
+          <TableRow key={url.id}>
+            <TableCell>
+              <a
+                href={url.originalUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 underline"
+              >
+                {url.originalUrl}
+              </a>
+            </TableCell>
+            <TableCell>
+              <a
+                href={`/${url.shortCode}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 underline"
+              >
+                {typeof window !== "undefined"
+                  ? `${window.location.origin}/${url.shortCode}`
+                  : `/${url.shortCode}`}
+              </a>
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
   );
 }
