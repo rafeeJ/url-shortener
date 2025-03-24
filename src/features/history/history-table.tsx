@@ -21,6 +21,7 @@ export default function HistoryTable() {
         <TableRow>
           <TableHead>Original URL</TableHead>
           <TableHead>Short URL</TableHead>
+          <TableHead>Views</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -48,6 +49,7 @@ export default function HistoryTable() {
                   : `/${url.shortCode}`}
               </a>
             </TableCell>
+            <TableCell>{url.visitCount}</TableCell>
           </TableRow>
         ))}
       </TableBody>

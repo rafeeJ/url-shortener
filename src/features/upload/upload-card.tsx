@@ -19,7 +19,7 @@ export const UploadCard = () => {
       <CardContent>
         <div className="flex flex-col gap-2">
           <UrlForm />
-          <FileForm />
+          {/*<FileForm />*/}
         </div>
       </CardContent>
     </Card>

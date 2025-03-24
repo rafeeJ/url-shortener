@@ -6,6 +6,7 @@ type Url = {
   shortCode: string;
   userId: string;
   createdAt: string;
+  visitCount: number;
 };
 
 type Response = {
