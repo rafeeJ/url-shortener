@@ -4,6 +4,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useQueryClient } from "@tanstack/react-query";
 
 type FormData = {
   url: string;
@@ -19,6 +20,7 @@ export const UrlForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
+  const queryClient = useQueryClient();
 
   const onSubmit = async (data: FormData) => {
     const response = await fetch("/api/urls", {
@@ -30,7 +32,9 @@ export const UrlForm = () => {
     });
 
     const result = await response.json();
-    console.log("Submitted URL:", result);
+    console.log(result);
+
+    await queryClient.invalidateQueries();
   };
 
   return (
