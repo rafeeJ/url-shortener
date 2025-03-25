@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+# URL Shortener
 
-First, run the development server:
+![img.png](img.png)
+
+## Getting started
+You will need Docker (inc. compose), and node.js installed for this app to work.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run stack
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## High Level Structure
+`/src/app` - Routes
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+`/src/db` - Drizzle Postgres definition
 
-## Learn More
+`/src/features` - Main features of the app ([Screaming architecture](https://profy.dev/article/react-folder-structure))
 
-To learn more about Next.js, take a look at the following resources:
+`/src/components` - ShadCN components
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## What does the app do
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Authenticate the user using cookies and middleware. I didn't want to spend time implementing auth and wanted to focus on actual implementation.
 
-## Deploy on Vercel
+Currently the app shorten URLs that the user enters into the form. It stores them in a Postgres SQL database, alongside a generated short url.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+When the a shortened user is clicked - the user is navigated to the destination URL. A visit is also tracked so that the owner of the URL can track how many times the URL is click.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## What the app doesnt do
+Due to lack of time, I could not implement the upload of a file. However I would approach this problem in the following manner:
+
+1) create blob storage bucked (S3, GCP bucket, Vercel Blob etc.)
+2) create a form (similar to how I have created the URL form) that takes in a file
+3) generate a pre-signed url for whatever blob storage to allow upload (nextjs has size limits API route, so this is a workaround)
+4) On success upload, generate a shortened url from the generated url and save in db
+
+( I did something similar for my own Wedding website, so I have examples of doing something like this in the past.)
+
+## Improvements
+- proper authentication (eg clerk, firebase)
+- use AWS resources
+- use terraform
+- dockerise apps to make deployments simple

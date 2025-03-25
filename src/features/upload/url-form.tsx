@@ -4,7 +4,6 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useQueryClient } from "@tanstack/react-query";
 import { useCreateUrl } from "@/features/upload/useCreateUrl";
 
 type FormData = {
@@ -46,7 +45,7 @@ export const UrlForm = () => {
         {APIError && <p className="text-sm text-red-500">{APIError.message}</p>}
       </div>
       <Button type="submit" className="w-full">
-        Submit
+        Add URL
       </Button>
     </form>
   );

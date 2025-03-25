@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useToast } from "@/hooks/use-toast";
 
 type FormData = {
   url: string;
@@ -6,6 +7,7 @@ type FormData = {
 
 export function useCreateUrl() {
   const queryClient = useQueryClient();
+  const { toast } = useToast();
 
   return useMutation({
     mutationFn: async (data: FormData) => {
@@ -25,6 +27,10 @@ export function useCreateUrl() {
       return response.json();
     },
     onSuccess: async () => {
+      toast({
+        title: "URL added succesfully",
+        description: "Check it out!",
+      });
       await queryClient.invalidateQueries();
     },
   });
